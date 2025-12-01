@@ -1,0 +1,51 @@
+[project]
+name = "banking-rest-service"
+version = "0.1.0"
+description = "Simple banking rest service implemented with FastAPI and SQLAlchemy"
+authors = [
+    { name = "Andrzej Żernaczuk", email = "andrzej.zernaczuk@gmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "pydantic>=2.12.5",
+    "sqlalchemy>=2.0.44",
+]
+
+[project.optional-dependencies]
+dev = [
+  "ruff==0.14.5",
+  "mypy==1.18.2",
+  "pre-commit==4.3.0",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+extend-exclude = [
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+]
+
+[tool.ruff.lint]
+per-file-ignores = {"__init__.py" = ["F401"]}
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+python_version = "3.13"
+mypy_path = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = "./src"
+addopts = "-q -ra"
+testpaths = ["tests"]
