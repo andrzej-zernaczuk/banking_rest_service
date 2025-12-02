@@ -44,6 +44,8 @@ line-ending = "auto"
 [tool.mypy]
 python_version = "3.13"
 mypy_path = ["src"]
+explicit_package_bases = true
+packages = ["banking_rest_service"]
 
 [tool.pytest.ini_options]
 pythonpath = "./src"
