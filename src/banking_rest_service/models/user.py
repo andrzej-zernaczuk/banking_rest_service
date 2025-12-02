@@ -50,12 +50,13 @@ class AccountHolder(Base):
         unique=True,
         index=True,
     )
+    email: Mapped[str] = mapped_column(String(255), nullable=False)
     holder_type: Mapped[str] = mapped_column(String, nullable=False, default="PERSON")
-    full_name: Mapped[str] = mapped_column(String, nullable=False)
-    date_of_birth: Mapped[date | None] = mapped_column(Date, nullable=True)
-    national_id_number: Mapped[str | None] = mapped_column(String, nullable=True)
-    email: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    phone_number: Mapped[str | None] = mapped_column(String, nullable=True)
+    first_name: Mapped[str] = mapped_column(String, nullable=False)
+    last_name: Mapped[str] = mapped_column(String, nullable=False)
+    date_of_birth: Mapped[date] = mapped_column(Date, nullable=False)
+    national_id_number: Mapped[str] = mapped_column(String, nullable=False)
+    phone_number: Mapped[str] = mapped_column(String, nullable=False)
     address_line1: Mapped[str | None] = mapped_column(String, nullable=True)
     address_line2: Mapped[str | None] = mapped_column(String, nullable=True)
     city: Mapped[str | None] = mapped_column(String, nullable=True)
