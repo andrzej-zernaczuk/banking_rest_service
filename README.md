@@ -620,3 +620,127 @@ To fully cover the initial service interface:
   * Unit tests for models & services.
   * Integration tests (FastAPI + SQLite) in `tests/integration/`.
 
+
+## 11. Project Initialization & Developer Workflow (Makefile)
+
+This project uses a **Makefile** to standardize common development tasks: environment setup, formatting, linting, tests, and cleanup. This makes it easy to onboard and keeps day-to-day commands short and repeatable.
+
+> All commands below are run from the **project root** (where `Makefile` and `pyproject.toml` live).
+
+### 11.1 Makefile Overview
+
+The Makefile is configured with:
+
+- **Strict bash settings** (`-eu -o pipefail`) to fail fast on errors.
+- **No inherited virtualenv** (`unexport VIRTUAL_ENV`) to avoid confusion with global venvs.
+- **Default target**: `help` (`make` alone prints usage).
+
+### 11.2 Available Targets
+
+#### `help`
+
+Default target. Run:
+
+```bash
+make
+```
+
+to see a summary of all available commands.
+
+#### `init_workspace`
+
+1. Verifies that `uv` is installed.
+2. Runs `uv sync --extra dev` to:
+
+   * Create `.venv` if needed.
+   * Install all dependencies, including dev extras (linting, testing, etc.).
+3. Installs git hooks via `pre-commit`.
+
+Run this once when you first clone the repo or whenever you want to recreate the environment.
+
+#### `run`
+
+* Sets `PYTHONPATH=src` so Python can import the package in `src/`.
+* Runs the main application module via `uv run`.
+
+#### `test`
+
+Runs the test suite using `pytest` inside the project’s virtualenv managed by `uv`.
+
+#### `uninstall_pre_commit`
+
+Removes git hooks installed by `pre-commit` (e.g. if you want a clean repo without hooks).
+
+#### `remove_caches`
+
+Cleans local caches used by:
+
+* Ruff (`.ruff_cache`)
+* mypy (`.mypy_cache`)
+* pre-commit (via `pre-commit clean`)
+
+Useful when tools behave unexpectedly or after large refactors.
+
+#### `clean_workspace`
+
+Composite target that:
+
+1. Uninstalls git hooks.
+2. Removes all caches.
+3. Deletes the virtual environment (`.venv`).
+
+This essentially resets your local workspace. After this, you’d run `make init_workspace` again to start fresh.
+
+#### `lint`
+
+Runs Ruff in **lint mode** on the entire repo.
+
+#### `fmt`
+
+Runs Ruff in **formatting mode**, applying automatic code formatting to all supported files.
+
+#### `typecheck`
+
+Runs `mypy` type checking on the `src` tree.
+
+#### `pre-commit`
+
+Manually runs all pre-commit hooks against the entire repo (similar to what happens on each commit, but on demand).
+
+### 11.3 Typical Developer Flow
+
+A common workflow using the Makefile:
+
+1. **First time setup:**
+
+   ```bash
+   make init_workspace
+   ```
+
+2. **Run the API during development:**
+
+   ```bash
+   make run
+   ```
+
+3. **Before committing:**
+
+   ```bash
+   make fmt
+   make lint
+   make typecheck
+   make test
+   ```
+
+   or just:
+
+   ```bash
+   make pre-commit
+   ```
+
+4. **Reset everything (if needed):**
+
+   ```bash
+   make clean_workspace
+   make init_workspace
+   ```

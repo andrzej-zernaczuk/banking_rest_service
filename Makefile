@@ -37,7 +37,7 @@ init_workspace:
 	@echo ">>> Workspace initialized. You're ready to develop."
 
 run:
-	@PYTHONPATH=src uv run python -m advanced_visualisations.main
+	@PYTHONPATH=src uv run python -m banking_rest_service.main
 
 test:
 	uv run pytest

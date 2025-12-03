@@ -16,3 +16,7 @@ Below you can see examples of my prompts:
 -*Have in mind that I'm using uv. I've already created venv and ran uv init. We'll fill pyproject.toml during the developement. Let us design the DB first. Lets have in mind the required service interfaces: Signing up Authentication Account Holders Accounts Transactions Money Transfer Cards Statements firstly lets create focus on the top level. What tables do we need, how are we gonna structure them. Remember we have to use sqlite, that is non negotiable*
 - *Lets be more strict with Account Holder. Lets not accept user creation without DoB, national_id_number, phone_number. Also I don't think full_name is correct approach, lets separate it into first_name and last_name - this might be needed even for simple things like saying "hello <name>" on front page*
 - *Generate documentation for the code we wrote so far. Lets describe clearly the aim of the project, technologies, structure of the project etc. Make it easy to copy to markdown file.*
+
+## Challanges
+- As usual in my experiances ChatGPT does not work well with big context. After initial project overview I focused on separate parts of it, ofter going into the details of the code to have better results. This approach slows down the work, but in my opinion yields better results.
+- Generating longer markdown files (for example documentation) in ChatGPT often results in broken document which has to be fixed manually. Of course it has to be later checked and editied by person anyway.
